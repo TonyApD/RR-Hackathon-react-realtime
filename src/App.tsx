@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Confetti from 'react-confetti'
 import './App.css';
+import dayjs from 'dayjs';
+import { type } from 'os';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function Clock() {
+  const [secondsRemaining, setSecondsRemaining] = useState(0);
+
+  setInterval(() => {
+    setSecondsRemaining(60 - dayjs().second());
+  });
+
+  return(<div className="clock-app">
+    <div>{dayjs().add(1, "minute").format("YYYY-MM-DD HH:mm")}</div>
+    <div>{secondsRemaining}</div>
+    <Explosion secondsRemaining={secondsRemaining} />
+  </div>)
 }
 
-export default App;
+type TimeDisplayProps = {
+  secondsRemaining: number;
+}
+
+function TimeDisplay(props: TimeDisplayProps) {
+  return(<div className="time-display"></div>)
+}
+
+type ExplosionProps = {
+  secondsRemaining: number;
+}
+
+function Explosion(props: ExplosionProps) {
+  if (props.secondsRemaining > 55) {
+    return(<Confetti
+      confettiSource={{ x: window.innerWidth / 2 - 300, y: window.innerHeight / 2 - 300, w: 600, h: 600}}
+    />);
+  }
+  return(<></>)
+}
