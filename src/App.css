@@ -1,6 +1,65 @@
 .clock-app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ticking-clock {
+  padding: 8px;
+  color: white;
+  font-size: 2rem;
+  background-color: gray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 20;
+  position: absolute;
+}
+
+.time-display-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.time-display {
+  padding: 8px;
+  border-left: 2rem solid gray;
+  border-right: 2rem solid gray;
+  border-bottom: 2rem solid gray;
+  width: 300px;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  font-size: 8rem;
+  background-color: black;
   color: red;
+  font-family: 'digital-7', sans-serif;
+}
+
+.dynamite {
+  background-color: red;
+  width: 750px;
+  height: 100px;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 16px;
+}
+
+.dynamite-line {
+  background-color: black;
+  width: 10%;
+  height: 100%;
+}
+
+.dynamite-shadow {
+  z-index: 10;
+  box-shadow: 0 5px 10px rgb(0 0 0 / 0.2);
+}
+
+.confetti {
+  z-index: 50;
 }

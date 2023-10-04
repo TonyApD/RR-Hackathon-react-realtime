@@ -2,20 +2,45 @@ import React, { useState } from 'react';
 import Confetti from 'react-confetti'
 import './App.css';
 import dayjs from 'dayjs';
-import { type } from 'os';
 
 export default function Clock() {
   const [secondsRemaining, setSecondsRemaining] = useState(0);
+  const [exploding, setExploding] = useState(false);
 
   setInterval(() => {
-    setSecondsRemaining(60 - dayjs().second());
+    const remaing = (60 - dayjs().second()) % 60;
+    setSecondsRemaining(remaing);
+    setExploding(remaing === 0 || remaing >= 57);
   });
 
   return(<div className="clock-app">
-    <div>{dayjs().add(1, "minute").format("YYYY-MM-DD HH:mm")}</div>
-    <div>{secondsRemaining}</div>
-    <Explosion secondsRemaining={secondsRemaining} />
+    <div className="dynamite">
+      <div className="dynamite-line"></div>
+      <div className="dynamite-line"></div>
+      <div className="dynamite-line"></div>
+    </div>
+    <div className="dynamite dynamite-shadow">
+      <div className="dynamite-line"></div>
+      <div className="dynamite-line"></div>
+      <div className="dynamite-line"></div>
+    </div>
+    <div className="dynamite">
+      <div className="dynamite-line"></div>
+      <div className="dynamite-line"></div>
+      <div className="dynamite-line"></div>
+    </div>
+    <div className="ticking-clock">
+      <TimeDisplayHeader />
+      <TimeDisplay secondsRemaining={secondsRemaining} />
+    </div>
+    <Explosion exploding={exploding} />
   </div>)
+}
+
+function TimeDisplayHeader() {
+  return (<div className="time-display-header">
+    {dayjs().add(1, "minute").format("YYYY-MM-DD HH:mm")}
+    </div>)
 }
 
 type TimeDisplayProps = {
@@ -23,16 +48,23 @@ type TimeDisplayProps = {
 }
 
 function TimeDisplay(props: TimeDisplayProps) {
-  return(<div className="time-display"></div>)
+  let displayValue = "00:" + props.secondsRemaining;
+  if (props.secondsRemaining < 10) {
+    displayValue = "00:0" + props.secondsRemaining;
+  }
+
+  return(<div className="time-display">
+    <div>{displayValue}</div>
+  </div>)
 }
 
 type ExplosionProps = {
-  secondsRemaining: number;
+  exploding: boolean;
 }
 
 function Explosion(props: ExplosionProps) {
-  if (props.secondsRemaining > 55) {
-    return(<Confetti
+  if (props.exploding) {
+    return(<Confetti className='confetti'
       confettiSource={{ x: window.innerWidth / 2 - 300, y: window.innerHeight / 2 - 300, w: 600, h: 600}}
     />);
   }
