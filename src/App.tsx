@@ -6,14 +6,23 @@ import dayjs from 'dayjs';
 export default function Clock() {
   const [secondsRemaining, setSecondsRemaining] = useState(0);
   const [exploding, setExploding] = useState(false);
+  const [vibrating, setVibrating] = useState(false);
+  const [animationDuration, setAnimationDuration] = useState('1s');
 
   setInterval(() => {
     const remaing = (60 - dayjs().second()) % 60;
     setSecondsRemaining(remaing);
     setExploding(remaing === 0 || remaing >= 57);
+    setVibrating(remaing >= 1 && remaing <= 4);
+
+    if(vibrating){
+      setAnimationDuration(`${remaing/10}s`)
+    }
   });
 
-  return(<div className="clock-app">
+  let vibratingCls = vibrating ? 'vibrator' : '';
+
+  return(<div className={`clock-app ${vibratingCls}`} style={{"animationDuration" : animationDuration }}>
     <div className="dynamite">
       <div className="dynamite-line"></div>
       <div className="dynamite-line"></div>

@@ -47,6 +47,7 @@
   display: flex;
   justify-content: space-around;
   border-radius: 16px;
+ 
 }
 
 .dynamite-line {
@@ -62,4 +63,27 @@
 
 .confetti {
   z-index: 50;
+}
+
+.vibrator {
+  --animation-duration: 1s;
+  animation: vibrateX var(--animation-duration, 1s) ease infinite;
+}
+
+@keyframes vibrateX {
+  0% {
+      transform: translateX(0);
+  }
+  25% {
+      transform: translateX(5px);
+  }
+  50% {
+      transform: translateX(0);
+  }
+  75% {
+      transform: translateX(-5px);
+  }
+  100% {
+      transform: translateX(0);
+  }
 }
